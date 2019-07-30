@@ -1,4 +1,4 @@
-<?
+<?php
 	class TS_SonosAlarm extends IPSModule
 	{
 		public function Create()		
@@ -22,7 +22,7 @@
 
       $steuer_id =  $this->ReadPropertyInteger("Trigger");
 
-$alarmskript= '<? 
+$alarmskript= '<?php 
 $SonosId = IPS_GetProperty(IPS_GetParent($_IPS["SELF"]), "Sonos_ID");
 $ip = IPS_GetProperty($SonosId, "IPAddress");
 
@@ -83,7 +83,7 @@ catch (Exception $e)
 if ($oldti==1) $sonos->Play();
 $sonos->SetVolume($volume);
 }
-?>';
+';
  $alarmskript_ID = $this->RegisterScript("Alarm_abspielen", "Alarm_abspielen", $alarmskript);
  IPS_SetHidden($alarmskript_ID,true);
  $this->Registerevent2($alarmskript_ID,$steuer_id); 
@@ -117,4 +117,4 @@ $sonos->SetVolume($volume);
     }
 
  }   
-?>
+
