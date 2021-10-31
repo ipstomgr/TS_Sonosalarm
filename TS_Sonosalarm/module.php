@@ -28,7 +28,17 @@ $ip = IPS_GetProperty($SonosId, "IPAddress");
 
 $pfad = IPS_GetProperty(IPS_GetParent($_IPS["SELF"]), "Pfad");
 if (Sys_Ping($ip, 1000) == true) {
-include_once("../modules/.store/de.kugelberg.sonos/libs/sonosAccess.php");
+
+if(file_exists('../modules/SymconSonos/Sonos/sonosAccess.php')){
+  include_once '../modules/SymconSonos/Sonos/sonosAccess.php';
+}elseif(file_exists('../modules/Sonos/libs/sonosAccess.php')){
+  include_once '../modules/Sonos/libs/sonosAccess.php';
+}elseif(file_exists('../modules/.store/de.kugelberg.sonos/libs/sonosAccess.php')){
+  include_once '../modules/.store/de.kugelberg.sonos/libs/sonosAccess.php';
+}else{
+    die('sonosAccess.php not found');
+}
+
 $sonos = new SonosAccess($ip); //Sonos ZP IPAdresse
 $alarmvol = IPS_GetProperty(IPS_GetParent($_IPS["SELF"]), "AlarmVolume");
 $alarmdatei = IPS_GetProperty(IPS_GetParent($_IPS["SELF"]), "Alarm1");
