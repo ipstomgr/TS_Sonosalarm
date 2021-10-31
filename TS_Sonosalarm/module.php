@@ -10,7 +10,7 @@
         //You cannot use variables here. Just static values.
       $this->RegisterPropertyInteger("Sonos_ID", 0 );
       $this->RegisterPropertyInteger("Trigger", 0);
-			$this->RegisterPropertyString("Pfad", "192.168.1.12/nas/");
+			$this->RegisterPropertyString("Pfad", "10.10.0.11:3777/user/ansage/");
 			$this->RegisterPropertyString("Alarm1", "alarm-sirene.mp3");
       $this->RegisterPropertyInteger("AlarmVolume", 5);
 		}
