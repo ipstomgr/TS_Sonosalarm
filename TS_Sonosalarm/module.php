@@ -25,73 +25,12 @@
 $alarmskript= '<?php 
 $SonosId = IPS_GetProperty(IPS_GetParent($_IPS["SELF"]), "Sonos_ID");
 $ip = IPS_GetProperty($SonosId, "IPAddress");
-
-$pfad = IPS_GetProperty(IPS_GetParent($_IPS["SELF"]), "Pfad");
 if (Sys_Ping($ip, 1000) == true) {
+    $pfad = IPS_GetProperty(IPS_GetParent($_IPS["SELF"]), "Pfad");
+    $alarmvol = IPS_GetProperty(IPS_GetParent($_IPS["SELF"]), "AlarmVolume");
+    $alarmdatei = IPS_GetProperty(IPS_GetParent($_IPS["SELF"]), "Alarm1");
 
-if(file_exists('../modules/SymconSonos/Sonos/sonosAccess.php')){
-  include_once '../modules/SymconSonos/Sonos/sonosAccess.php';
-}elseif(file_exists('../modules/Sonos/libs/sonosAccess.php')){
-  include_once '../modules/Sonos/libs/sonosAccess.php';
-}elseif(file_exists('../modules/.store/de.kugelberg.sonos/libs/sonosAccess.php')){
-  include_once '../modules/.store/de.kugelberg.sonos/libs/sonosAccess.php';
-}else{
-    die('sonosAccess.php not found');
-}
-
-$sonos = new SonosAccess($ip); //Sonos ZP IPAdresse
-$alarmvol = IPS_GetProperty(IPS_GetParent($_IPS["SELF"]), "AlarmVolume");
-$alarmdatei = IPS_GetProperty(IPS_GetParent($_IPS["SELF"]), "Alarm1");
-
-///$ton="alarm";
-/*
-$wav = array
-(
-// x-file-cifs://192.168.1.11/nas/
-   "alarm"   => "x-file-cifs://".$pfad.$alarmdatei,
-   "bell"    => "x-file-cifs://".$pfad."alarm-sirene.mp3"
-);
-*/
-$wav = "x-file-cifs://".$pfad.$alarmdatei;
-$volume = $sonos->GetVolume();
-
-//Speichern der Aktuellen Informationen
-$oldpi = $sonos->GetPositionInfo();
-$oldmi = $sonos->GetMediaInfo();
-$radio=(strpos($oldmi["CurrentURI"],"x-sonosapi-stream:")>0)===false;
-$oldti = $sonos->GetTransportInfo();
-
-$sonos->SetVolume($alarmvol);
-//$sonos->SetAVTransportURI($wav[$ton]);
-$sonos->SetAVTransportURI($wav);
-$sonos->Play();
-
-IPS_Sleep(1000);
-while ($sonos->GetTransportInfo()==1)
-{
-    IPS_Sleep(200); //Alle 200ms wird abgefragt
-}
-//Player wieder Starten
-if ($radio)
-{
-    $sonos->SetRadio($oldmi["CurrentURI"]);
-}
-else
-{
-    $sonos->SetAVTransportURI($oldmi["CurrentUR"],$oldmi["CurrentURIMetaData"]);
-}
-try
-{
-    // Seek TRack_Nr
-   $sonos->Seek("TRACK_NR",$oldpi["Track"]);
-   // Seek REl_time
-   $sonos->Seek("REL_TIME",$oldpi["RelTime"]);
-}
-catch (Exception $e)
-{
-}
-if ($oldti==1) $sonos->Play();
-$sonos->SetVolume($volume);
+    SNS_PlayFiles($SonosId, "[\"http://".$pfad.$alarmdatei."\"]",$alarmvol);
 }
 ';
  $alarmskript_ID = $this->RegisterScript("Alarm_abspielen", "Alarm_abspielen", $alarmskript);
