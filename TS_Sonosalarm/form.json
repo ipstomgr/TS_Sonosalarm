@@ -7,7 +7,7 @@
     { "name": "Trigger",    "type": "SelectVariable",    "caption": "Trigger Ereignis" },
     { "type": "ValidationTextBox", "name": "Pfad", "caption": "Pfad Dateien" },
     { "type": "ValidationTextBox", "name": "Alarm1", "caption": "Alarm Datei1" },
-		{ "name": "AlarmVolume",    "type": "NumberSpinner",     "caption": "Alarm volume (%)", } 
+		{ "name": "AlarmVolume",    "type": "NumberSpinner",     "caption": "Alarm volume (%)"} 
 	],
 	"actions":
 	[  
