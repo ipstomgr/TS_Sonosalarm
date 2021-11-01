@@ -35,7 +35,10 @@ if (Sys_Ping($ip, 1000) == true) {
 ';
  $alarmskript_ID = $this->RegisterScript("Alarm_abspielen", "Alarm_abspielen", $alarmskript);
  IPS_SetHidden($alarmskript_ID,true);
- $this->Registerevent2($alarmskript_ID,$steuer_id); 
+
+if ($steuer_id <> 0) {
+    $this->Registerevent2($alarmskript_ID,$steuer_id); 
+ }
 
   $sk_id=IPS_GetObjectIDByIdent('Alarm_abspielen', $this->InstanceID);
   if ( IPS_ScriptExists($sk_id)){
