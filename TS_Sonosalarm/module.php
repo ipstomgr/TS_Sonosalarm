@@ -65,6 +65,7 @@ if ($steuer_id <> 0) {
       IPS_SetEventTrigger($eid, 4, $Ziel_id);        //Bei bestimmten Wert
       @IPS_SetEventTriggerValue($eid, true);       
       IPS_SetParent($eid, $TargetID);         //Ereignis zuordnen
+      IPS_SetEventAction($eid, '{7938A5A2-0981-5FE0-BE6C-8AA610D654EB}', []);			
       IPS_SetEventActive($eid, true);             //Ereignis aktivieren
     }
 
